@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { Container, Grid, Box, Typography, TextField, Button } from '@mui/material';
+import { Container, Grid, Box, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
+
 import login from '../../../images/login.png';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 const Register = () => {
-	const [ registerData, setRegisterData ] = useState({});
-	console.log(registerData);
+	const {user, registerUser, isLoading, authError } = useAuth();
+	const [  registerData, setRegisterData ] = useState({});
 	const handleOnBlur = (e) => {
 		const fieldName = e.target.name;
 		const fieldValue = e.target.value;
@@ -19,7 +21,7 @@ const Register = () => {
 			alert('Passwords do not match');
 			return;
 		}
-		alert('Login Successful');
+		registerUser(registerData.email, registerData.password);
 	};
 	return (
 		<Container maxWidth="xl">
@@ -37,40 +39,54 @@ const Register = () => {
 						<Typography sx={{ textAlign: 'center' }} variant="body1" gutterBottom>
 							Register
 						</Typography>
-						<form onSubmit={handleSubmit}>
-							<TextField
-								sx={{ width: 1, m: 1 }}
-								type="email"
-								label="Email"
-								variant="standard"
-								name="email"
-								onBlur={handleOnBlur}
-							/>
-							<TextField
-								sx={{ width: 1, m: 1 }}
-								type="password"
-								label="Password"
-								variant="standard"
-								name="password"
-								onBlur={handleOnBlur}
-							/>
-							<TextField
-								sx={{ width: 1, m: 1 }}
-								type="password"
-								label="Confirm Password"
-								variant="standard"
-								name="password2"
-								onBlur={handleOnBlur}
-							/>
+						{!isLoading && (
+							<form onSubmit={handleSubmit}>
+								<TextField
+									sx={{ width: 1, m: 1 }}
+									type="email"
+									label="Email"
+									variant="standard"
+									name="email"
+									onBlur={handleOnBlur}
+								/>
+								<TextField
+									sx={{ width: 1, m: 1 }}
+									type="password"
+									label="Password"
+									variant="standard"
+									name="password"
+									onBlur={handleOnBlur}
+								/>
+								<TextField
+									sx={{ width: 1, m: 1 }}
+									type="password"
+									label="Confirm Password"
+									variant="standard"
+									name="password2"
+									onBlur={handleOnBlur}
+								/>
 
-							<Button type="submit" sx={{ width: 1, m: 1 }} variant="contained">
-								Login
-							</Button>
-							<NavLink style={{ textDecoration: 'none' }} to="/login">
-								<Button variant="text"> Already Register? Please Login</Button>
-							</NavLink>
-						</form>
+								<Button type="submit" sx={{ width: 1, m: 1 }} variant="contained">
+									Register
+								</Button>
+								<NavLink style={{ textDecoration: 'none' }} to="/login">
+									<Button variant="text"> Already Register? Please Login</Button>
+								</NavLink>
+							</form>
+						)}
+						{isLoading && (
+							<Box sx={{ display: 'flex' }}>
+								<CircularProgress />
+							</Box>
+						)}
 					</Box>
+					{
+						user?.email && <Alert severity="success">User Created Successfully!</Alert>
+
+					}
+					{
+						authError && <Alert severity="error">{authError}</Alert>
+					}
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<img style={{ width: '100%' }} src={login} alt="!" />

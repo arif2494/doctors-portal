@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Container, Grid, Box, Typography, TextField, Button } from '@mui/material';
+import { Container, Grid, Box, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
 import login from '../../../images/login.png';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 const Login = () => {
+	const { user, loginUser, authError, isLoading } = useAuth();
 	const [ loginData, setLoginData ] = useState({});
 	const handleOnBlur = (e) => {
 		const fieldName = e.target.name;
@@ -12,8 +14,9 @@ const Login = () => {
 		setLoginData(newLoginData);
 	};
 	const handleSubmit = (e) => {
+		loginUser(loginData.email, loginData.password);
 		e.preventDefault();
-		alert('Login Successful');
+
 	};
 	return (
 		<Container maxWidth="xl">
@@ -31,7 +34,7 @@ const Login = () => {
 						<Typography sx={{ textAlign: 'center' }} variant="body1" gutterBottom>
 							Login
 						</Typography>
-						<form onSubmit={handleSubmit}>
+					{!isLoading &&	<form onSubmit={handleSubmit}>
 							<TextField
 								sx={{ width: 1, m: 1 }}
 								type="email"
@@ -55,8 +58,20 @@ const Login = () => {
 							<NavLink style={{ textDecoration: 'none' }} to="/register">
 								<Button variant="text"> New User? Please Register</Button>
 							</NavLink>
-						</form>
+						</form>}
+							{isLoading && (
+							<Box sx={{ display: 'flex' }}>
+								<CircularProgress />
+							</Box>
+						)}
 					</Box>
+						{
+						user?.email && <Alert severity="success">User Loggedin Successfully!</Alert>
+
+					}
+					{
+						authError && <Alert severity="error">{authError}</Alert>
+					}
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<img style={{ width: '100%' }} src={login} alt="!" />
