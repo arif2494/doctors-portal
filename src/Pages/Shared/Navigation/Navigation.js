@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const navigation = () => {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -25,10 +25,16 @@ const navigation = () => {
 					>
 						Doctors Portal
 					</Typography>
-					<Link to="/appointment">
-						<Button color="inherit">Appointment</Button>
-					</Link>
-					<Button color="inherit">Login</Button>
+					<NavLink to="/appointment">
+						<Button variant="contained" sx={{ mr: 2 }} color="inherit">
+							Appointment
+						</Button>
+					</NavLink>
+					<NavLink to="/login">
+						<Button variant="contained" color="inherit">
+							Login
+						</Button>
+					</NavLink>
 				</Toolbar>
 			</AppBar>
 		</Box>
