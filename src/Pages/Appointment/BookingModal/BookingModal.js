@@ -6,7 +6,7 @@ import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
-
+import useAuth from '../../../hooks/useAuth';
 const style = {
 	position: 'absolute',
 	top: '50%',
@@ -20,6 +20,7 @@ const style = {
 };
 const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
 	const { name, time } = booking;
+	const { user } = useAuth();
 	const handleBookSubmit = (e) => {
 		e.preventDefault();
 		// collect data from form and send server
@@ -55,7 +56,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
 						<TextField
 							label="Name"
 							sx={{ width: '100%', mr: 2, mb: 2 }}
-							defaultValue="Your Name"
+							defaultValue={user.displayName}
 							id="standard-size-small"
 							size="small"
 							variant="standard"
@@ -63,7 +64,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
 						<TextField
 							label="Email"
 							sx={{ width: '100%', mr: 2, mb: 2 }}
-							defaultValue="Your Email"
+							defaultValue={user.email}
 							id="standard-size-small"
 							size="small"
 							variant="standard"
@@ -71,7 +72,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date }) => {
 						<TextField
 							sx={{ width: '100%', mr: 2, mb: 2 }}
 							label="Phone"
-							defaultValue="1021584984984"
+							defaultValue=""
 							id="standard-size-small"
 							size="small"
 							variant="standard"

@@ -5,6 +5,9 @@ import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
+	signInWithPopup,
+	GoogleAuthProvider,
+	updateProfile,
 	signOut
 } from 'firebase/auth';
 
@@ -15,16 +18,47 @@ const useFirebase = () => {
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ authError, setAuthError ] = useState('');
 	const auth = getAuth();
+	const googleProvider = new GoogleAuthProvider();
 
+	//Google sign in
+	const googleSignIn = (location, history) => {
+		setIsLoading(true);
+		signInWithPopup(auth, googleProvider)
+			.then((result) => {
+				// const user = result.user;
+				setAuthError('');
+				const destination = location?.state?.from || '/';
+				history.replace(destination);
+			})
+			.catch((error) => {
+				// Handle Errors here.
+				const errorMessage = error.message;
+				setAuthError(errorMessage);
+			})
+			.finally(() => setIsLoading(false));
+	};
 	// register
-	const registerUser = (email, password) => {
+	const registerUser = (email, password, name, location, history) => {
 		setIsLoading(true);
 		createUserWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
+				setAuthError('');
 				// Signed in
 				// const user = userCredential.user;
-
-				setAuthError('');
+				const newUser = { email, displayName: name };
+				setUser(newUser);
+				// send name to firebase
+				updateProfile(auth.currentUser, { displayName: name })
+					.then(() => {
+						// Profile updated!
+						// ...
+					})
+					.catch((error) => {
+						// An error occurred
+						// ...
+					});
+				const destination = location?.state?.from || '/';
+				history.replace(destination);
 			})
 			.catch((error) => {
 				const errorMessage = error.message;
@@ -34,7 +68,7 @@ const useFirebase = () => {
 	};
 
 	// sign in
-	const loginUser = (email, password, location,history) => {
+	const loginUser = (email, password, location, history) => {
 		setIsLoading(true);
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
@@ -82,6 +116,7 @@ const useFirebase = () => {
 		isLoading,
 		user,
 		authError,
+		googleSignIn,
 		registerUser,
 		loginUser,
 		logout

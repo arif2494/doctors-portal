@@ -3,16 +3,19 @@ import { useState } from 'react';
 import { Container, Grid, Box, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
 
 import login from '../../../images/login.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useLocation,useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 const Register = () => {
 	const {user, registerUser, isLoading, authError } = useAuth();
 	const [  registerData, setRegisterData ] = useState({});
+	const location = useLocation();
+	const history = useHistory();
 	const handleOnBlur = (e) => {
 		const fieldName = e.target.name;
 		const fieldValue = e.target.value;
 		const newLoginData = { ...registerData };
 		newLoginData[fieldName] = fieldValue;
+		console.log(newLoginData);
 		setRegisterData(newLoginData);
 	};
 	const handleSubmit = (e) => {
@@ -21,7 +24,7 @@ const Register = () => {
 			alert('Passwords do not match');
 			return;
 		}
-		registerUser(registerData.email, registerData.password);
+		registerUser(registerData.email, registerData.password, registerData.name, location, history);
 	};
 	return (
 		<Container maxWidth="xl">
@@ -41,6 +44,14 @@ const Register = () => {
 						</Typography>
 						{!isLoading && (
 							<form onSubmit={handleSubmit}>
+								<TextField
+									sx={{ width: 1, m: 1 }}
+									type="text"
+									label="Name"
+									variant="standard"
+									name="name"
+									onBlur={handleOnBlur}
+								/>
 								<TextField
 									sx={{ width: 1, m: 1 }}
 									type="email"
