@@ -3,6 +3,7 @@ import { Container, Grid, Box, Typography, TextField, Button, CircularProgress, 
 import login from '../../../images/login.png';
 import { NavLink,useLocation,useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import Navigation from '../../Shared/Navigation/Navigation';
 const Login = () => {
 	const { user, loginUser,googleSignIn, authError, isLoading } = useAuth();
 	const [ loginData, setLoginData ] = useState({});
@@ -24,6 +25,8 @@ const Login = () => {
 		googleSignIn(location, history);
 	}
 	return (
+		<>
+		<Navigation></Navigation>
 		<Container maxWidth="xl">
 			<Grid container spacing={3}>
 				<Grid item xs={12} md={6}>
@@ -85,6 +88,7 @@ const Login = () => {
 				</Grid>
 			</Grid>
 		</Container>
+		</>
 	);
 };
 

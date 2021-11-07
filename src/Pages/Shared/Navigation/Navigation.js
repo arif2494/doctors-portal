@@ -28,16 +28,21 @@ const Navigation = () => {
 						Doctors Portal
 					</Typography>
 					<NavLink style={{ textDecoration: 'none' }} to="/appointment">
-						<Button variant="contained" sx={{ mr: 2 }} color="inherit">
+						<Button variant="text" sx={{ mr: 2 , color:'white'}} color="inherit">
 							Appointment
 						</Button>
 					</NavLink>
+				{ user.email &&	<NavLink style={{ textDecoration: 'none' }} to="/dashboard">
+						<Button variant="text" sx={{ mr: 2 ,color:'white'}} color="inherit">
+							Appoinment
+						</Button>
+					</NavLink>}
 					{
 						user?.email ? 
-						<Button  onClick={logout} variant="contained" color="inherit">
+						<Button  onClick={logout} variant="text" sx={{color:'white'}} color="inherit">
 							LogOut
 						</Button> : <NavLink style={{ textDecoration: 'none' }} to="/login">
-						<Button variant="contained" color="inherit">
+						<Button variant="text" sx={{color:'white'}} color="inherit">
 							Login
 						</Button>
 					</NavLink>

@@ -5,6 +5,7 @@ import { Container, Grid, Box, Typography, TextField, Button, CircularProgress, 
 import login from '../../../images/login.png';
 import { NavLink,useLocation,useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import Navigation from '../../Shared/Navigation/Navigation';
 const Register = () => {
 	const {user, registerUser, isLoading, authError } = useAuth();
 	const [  registerData, setRegisterData ] = useState({});
@@ -27,6 +28,8 @@ const Register = () => {
 		registerUser(registerData.email, registerData.password, registerData.name, location, history);
 	};
 	return (
+	<>
+	<Navigation></Navigation>
 		<Container maxWidth="xl">
 			<Grid container spacing={3}>
 				<Grid item xs={12} md={6}>
@@ -104,6 +107,7 @@ const Register = () => {
 				</Grid>
 			</Grid>
 		</Container>
+	</>
 	);
 };
 

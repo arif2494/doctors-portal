@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Grid, Paper, Typography } from '@mui/material';
 import BookingModal from '../BookingModal/BookingModal';
 
-const Booking = ({ booking ,date}) => {
+const Booking = ({ booking ,date,setAppoinmentSuccess}) => {
 	const { name, time, space } = booking;
 	const horizentalAlign = {
 		display: 'flex',
@@ -44,6 +44,7 @@ const Booking = ({ booking ,date}) => {
 			openBooking={openBooking}
 			handleBookingClose={handleBookingClose}
 			date={date}
+			setAppoinmentSuccess={setAppoinmentSuccess}
 		></BookingModal>
 		</>
 	);
