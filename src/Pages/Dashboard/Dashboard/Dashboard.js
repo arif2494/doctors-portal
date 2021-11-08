@@ -16,15 +16,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
-
-import { BrowserRouter as Router, Switch, Route, Link, NavLink, useParams, useRouteMatch } from 'react-router-dom';
+// for nested route
+import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 import DashboardHome from '../DashboardHome/DashboardHome';
 import AddAdmin from '../AddAdmin/AddAdmin';
 import AddDoctor from '../AddDoctor/AddDoctor';
+import useAuth from '../../../hooks/useAuth';
 const Dashboard = (props) => {
+	const { admin } = useAuth();
 	const drawerWidth = 240;
 	const { window } = props;
-	const [ mobileOpen, setMobileOpen ] = React.useState(false);
+	const [ mobileOpen, setMobileOpen ] = useState(false);
 	//nesting route
 	let { path, url } = useRouteMatch();
 	const handleDrawerToggle = () => {
@@ -34,16 +36,15 @@ const Dashboard = (props) => {
 	const drawer = (
 		<div>
 			<Toolbar />
-
 			<Divider />
-			<NavLink
+			<Link
 				style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
 				to="/appointment"
 			>
 				<Button variant="text" color="inherit">
 					Make an Appointment
 				</Button>
-			</NavLink>
+			</Link>
 			<Link
 				style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
 				to={url}
@@ -52,22 +53,27 @@ const Dashboard = (props) => {
 					Dashboard
 				</Button>
 			</Link>
-			<Link
-				style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
-				to={`${url}/addAdmin`}
-			>
-				<Button variant="text" color="inherit">
-					Make Admin
-				</Button>
-			</Link>
-			<Link
-				style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
-				to={`${url}/addDoctor`}
-			>
-				<Button variant="text" color="inherit">
-					Add Doctor
-				</Button>
-			</Link>
+			{admin && (
+				<Link
+					style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
+					to={`${url}/addAdmin`}
+				>
+					<Button variant="text" color="inherit">
+						Make Admin
+					</Button>
+				</Link>
+			)}
+			{admin && (
+				<Link
+					style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
+					to={`${url}/addDoctor`}
+				>
+					<Button variant="text" color="inherit">
+						Add Doctor
+					</Button>
+				</Link>
+			)}
+
 			<List>
 				{[ 'Inbox', 'Starred', 'Send email', 'Drafts' ].map((text, index) => (
 					<ListItem button key={text}>
