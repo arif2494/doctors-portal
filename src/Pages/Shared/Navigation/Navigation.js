@@ -34,7 +34,7 @@ const Navigation = () => {
 					</NavLink>
 				{ user.email &&	<NavLink style={{ textDecoration: 'none' }} to="/dashboard">
 						<Button variant="text" sx={{ mr: 2 ,color:'white'}} color="inherit">
-							Appoinment
+							Dashboard
 						</Button>
 					</NavLink>}
 					{

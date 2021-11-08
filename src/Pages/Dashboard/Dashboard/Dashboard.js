@@ -39,7 +39,7 @@ const Dashboard = (props) => {
 				to="/appointment"
 			>
 				<Button variant="text" color="inherit">
-					Dashboard
+					Appointment
 				</Button>
 			</NavLink>
 			<List>
