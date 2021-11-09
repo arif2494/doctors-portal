@@ -12,6 +12,7 @@ import {
 	signOut
 } from 'firebase/auth';
 
+
 // initialize firebase
 initializeFirebase();
 const useFirebase = () => {
@@ -22,7 +23,7 @@ const useFirebase = () => {
 	const [token, setToken] = useState('');
 	const auth = getAuth();
 	const googleProvider = new GoogleAuthProvider();
-
+	const adminEmail = 'arifulislam161024@gmail.com';
 	//Google sign in
 	const googleSignIn = (location, history) => {
 		setIsLoading(true);
@@ -116,14 +117,17 @@ const useFirebase = () => {
 		[ auth ]
 	);
 	
+
+	const url =`https://polar-headland-78773.herokuapp.com/users/${user.email || adminEmail} `
+	console.log(url, 'url');
 	// check if admin
 		useEffect(() => {	
-		fetch(`http://localhost:5000/users/${user.email}`)
+		fetch(url)
 		.then(res => res.json())
 		.then(data => {
 			setAdmin(data.isAdmin);
 		})
-	} , [user.email])
+	} , [url])
 	
 
 	// logout
@@ -140,7 +144,7 @@ const useFirebase = () => {
 	};
 	const saveUser = (email, displayName, method) => {
 		const user={email, displayName};
-		fetch('http://localhost:5000/users',{
+		fetch('https://polar-headland-78773.herokuapp.com/users',{
 			method: method,
 			headers: {
 				'content-type': 'application/json'

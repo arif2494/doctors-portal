@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 const Appoinments = ({ date }) => {
 	const { user } = useAuth();
 	const [ appoinments, setAppoinments ] = useState([]);
-	const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`;
+	const url = `https://polar-headland-78773.herokuapp.com/appointments?email=${user.email}&date=${date}`;
 	useEffect(
 		() => {
 			fetch(url).then((res) => res.json()).then((data) => {

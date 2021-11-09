@@ -40,7 +40,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date, setAppoi
 			date: date.toLocaleDateString()
 		};
 		// send data to server
-		fetch('http://localhost:5000/appointments', {
+		fetch('https://polar-headland-78773.herokuapp.com/appointments', {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json'
