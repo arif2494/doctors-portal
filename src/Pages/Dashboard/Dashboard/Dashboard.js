@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
+import useAuth from '../../../hooks/useAuth';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,7 +22,7 @@ import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 import DashboardHome from '../DashboardHome/DashboardHome';
 import AddAdmin from '../AddAdmin/AddAdmin';
 import AddDoctor from '../AddDoctor/AddDoctor';
-import useAuth from '../../../hooks/useAuth';
+import AdminRoute from '../../Login/AdminRoute/AdminRoute';
 const Dashboard = (props) => {
 	const { admin } = useAuth();
 	const drawerWidth = 240;
@@ -150,12 +151,12 @@ const Dashboard = (props) => {
 					<Route exact path={path}>
 						<DashboardHome />
 					</Route>
-					<Route path={`${path}/addAdmin`}>
+					<AdminRoute path={`${path}/addAdmin`}>
 						<AddAdmin />
-					</Route>
-					<Route path={`${path}/addDoctor`}>
+					</AdminRoute>
+					<AdminRoute path={`${path}/addDoctor`}>
 						<AddDoctor />
-					</Route>
+					</AdminRoute>
 				</Switch>
 			</Box>
 		</Box>

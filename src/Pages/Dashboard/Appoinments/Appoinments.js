@@ -15,7 +15,6 @@ const Appoinments = ({ date }) => {
 		() => {
 			fetch(url).then((res) => res.json()).then((data) => {
 				setAppoinments(data);
-				console.log(data);
 			});
 		},
 		[ url ]
