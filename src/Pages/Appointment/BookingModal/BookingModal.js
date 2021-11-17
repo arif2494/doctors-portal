@@ -19,7 +19,7 @@ const style = {
 	p: 4
 };
 const BookingModal = ({ openBooking, handleBookingClose, booking, date, setAppoinmentSuccess }) => {
-	const { name, time } = booking;
+	const { name, time, price } = booking;
 	const { user } = useAuth();
 	const initialState = { patientName: user.displayName, patientEmail: user.email, patientPhone: '' };
 	const [ bookingData, setBookingData ] = useState(initialState);
@@ -36,11 +36,12 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date, setAppoi
 		const appointment = {
 			...bookingData,
 			time,
+			price,
 			serviceName: name,
 			date: date.toLocaleDateString()
 		};
 		// send data to server
-		fetch('https://polar-headland-78773.herokuapp.com/appointments', {
+		fetch('http://localhost:5000/appointments', {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json'

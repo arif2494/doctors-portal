@@ -7,10 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
 const Appoinments = ({ date }) => {
 	const { user } = useAuth();
 	const [ appoinments, setAppoinments ] = useState([]);
-	const url = `https://polar-headland-78773.herokuapp.com/appointments?email=${user.email}&date=${date}`;
+	const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`;
 	useEffect(
 		() => {
 			fetch(url).then((res) => res.json()).then((data) => {
@@ -43,7 +44,9 @@ const Appoinments = ({ date }) => {
 								</TableCell>
 								<TableCell>{row.time}</TableCell>
 								<TableCell>{row.serviceName}</TableCell>
-								<TableCell>{row.fat}</TableCell>
+								<TableCell>
+									{row.payment ? 'paid' : <Link to={`/dashboard/payment/${row._id}`}>Pay</Link>}
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

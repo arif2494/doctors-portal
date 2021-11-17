@@ -3,7 +3,7 @@ import { Button, Grid, Paper, Typography } from '@mui/material';
 import BookingModal from '../BookingModal/BookingModal';
 
 const Booking = ({ booking ,date,setAppoinmentSuccess}) => {
-	const { name, time, space } = booking;
+	const { name, time, space,price } = booking;
 	const horizentalAlign = {
 		display: 'flex',
 		flexDirection: 'column',
@@ -28,6 +28,9 @@ const Booking = ({ booking ,date,setAppoinmentSuccess}) => {
 				</Typography>
 				<Typography variant="h6" gutterBottom>
 					{time}
+				</Typography>
+				<Typography variant="body1" gutterBottom>
+					Price : $ {price}
 				</Typography>
 				<Typography variant="body1" gutterBottom>
 					Space Available : {space}

@@ -23,6 +23,7 @@ import DashboardHome from '../DashboardHome/DashboardHome';
 import AddAdmin from '../AddAdmin/AddAdmin';
 import AddDoctor from '../AddDoctor/AddDoctor';
 import AdminRoute from '../../Login/AdminRoute/AdminRoute';
+import Payment from '../Payment/Payment';
 const Dashboard = (props) => {
 	const { admin } = useAuth();
 	const drawerWidth = 240;
@@ -150,6 +151,9 @@ const Dashboard = (props) => {
 				<Switch>
 					<Route exact path={path}>
 						<DashboardHome />
+					</Route>
+					<Route path={`${path}/payment/:id`}>
+						<Payment />
 					</Route>
 					<AdminRoute path={`${path}/addAdmin`}>
 						<AddAdmin />
