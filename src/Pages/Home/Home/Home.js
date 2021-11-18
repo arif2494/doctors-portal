@@ -4,6 +4,7 @@ import AppoinmentBanner from '../AppoinmentBanner/AppoinmentBanner';
 import Banner from '../Banner/Banner';
 import Services from '../Services/Services';
 import Navigation from '../../Shared/Navigation/Navigation';
+import Doctors from '../Doctors/Doctors';
 
 const Home = () => {
 	return (
@@ -12,6 +13,7 @@ const Home = () => {
 			<Banner />
 			<Services />
 			<AppoinmentBanner />
+			<Doctors> </Doctors>
 		</Box>
 	);
 };
