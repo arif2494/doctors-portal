@@ -18,19 +18,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Button } from '@mui/material';
 // for nested route
-import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
-import DashboardHome from '../DashboardHome/DashboardHome';
-import AddAdmin from '../AddAdmin/AddAdmin';
-import AddDoctor from '../AddDoctor/AddDoctor';
-import AdminRoute from '../../Login/AdminRoute/AdminRoute';
-import Payment from '../Payment/Payment';
+import { Outlet, Link } from 'react-router-dom';
+
 const Dashboard = (props) => {
 	const { admin } = useAuth();
 	const drawerWidth = 240;
 	const { window } = props;
 	const [ mobileOpen, setMobileOpen ] = useState(false);
 	//nesting route
-	let { path, url } = useRouteMatch();
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
@@ -49,7 +44,7 @@ const Dashboard = (props) => {
 			</Link>
 			<Link
 				style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
-				to={url}
+				to="/dashboard"
 			>
 				<Button variant="text" color="inherit">
 					Dashboard
@@ -58,7 +53,7 @@ const Dashboard = (props) => {
 			{admin && (
 				<Link
 					style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
-					to={`${url}/addAdmin`}
+					to={`/dashboard/addAdmin`}
 				>
 					<Button variant="text" color="inherit">
 						Make Admin
@@ -68,7 +63,7 @@ const Dashboard = (props) => {
 			{admin && (
 				<Link
 					style={{ textDecoration: 'none', display: 'flex', justifyContent: 'center', marginTop: '20px' }}
-					to={`${url}/addDoctor`}
+					to={`/dashboard/addDoctor`}
 				>
 					<Button variant="text" color="inherit">
 						Add Doctor
@@ -147,21 +142,8 @@ const Dashboard = (props) => {
 			</Box>
 			<Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
 				<Toolbar />
-
-				<Switch>
-					<Route exact path={path}>
-						<DashboardHome />
-					</Route>
-					<Route path={`${path}/payment/:id`}>
-						<Payment />
-					</Route>
-					<AdminRoute path={`${path}/addAdmin`}>
-						<AddAdmin />
-					</AdminRoute>
-					<AdminRoute path={`${path}/addDoctor`}>
-						<AddDoctor />
-					</AdminRoute>
-				</Switch>
+				{/* NESTED ROUTES */}
+				<Outlet />
 			</Box>
 		</Box>
 	);

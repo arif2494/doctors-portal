@@ -25,7 +25,7 @@ const useFirebase = () => {
 	const googleProvider = new GoogleAuthProvider();
 	const adminEmail = 'honda@car.com';
 	//Google sign in
-	const googleSignIn = (location, history) => {
+	const googleSignIn = (location, navigate) => {
 		setIsLoading(true);
 		signInWithPopup(auth, googleProvider)
 			.then((result) => {
@@ -35,7 +35,7 @@ const useFirebase = () => {
 				// const user = result.user;
 				setAuthError('');
 				const destination = location?.state?.from || '/';
-				history.replace(destination);
+				navigate(destination);
 			})
 			.catch((error) => {
 				// Handle Errors here.
@@ -45,7 +45,7 @@ const useFirebase = () => {
 			.finally(() => setIsLoading(false));
 	};
 	// register
-	const registerUser = (email, password, name, location, history) => {
+	const registerUser = (email, password, name, location, navigate) => {
 		setIsLoading(true);
 		createUserWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
@@ -68,7 +68,7 @@ const useFirebase = () => {
 						// ...
 					});
 				const destination = location?.state?.from || '/';
-				history.replace(destination);
+				navigate(destination);
 			})
 			.catch((error) => {
 				const errorMessage = error.message;
@@ -78,14 +78,14 @@ const useFirebase = () => {
 	};
 
 	// sign in
-	const loginUser = (email, password, location, history) => {
+	const loginUser = (email, password, location, navigate) => {
 		setIsLoading(true);
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
 				// Signed in
 				// const user = userCredential.user;
 				const destination = location?.state?.from || '/';
-				history.replace(destination);
+				navigate(destination);
 				setAuthError('');
 			})
 			.catch((error) => {

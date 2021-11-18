@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Container, Grid, Box, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
 import login from '../../../images/login.png';
-import { NavLink,useLocation,useHistory } from 'react-router-dom';
+import { NavLink,useLocation,useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import Navigation from '../../Shared/Navigation/Navigation';
 const Login = () => {
 	const { user, loginUser,googleSignIn, authError, isLoading } = useAuth();
 	const [ loginData, setLoginData ] = useState({});
 	const location = useLocation();
-	const history = useHistory();
+	const navigate = useNavigate();
 	const handleOnBlur = (e) => {
 		const fieldName = e.target.name;
 		const fieldValue = e.target.value;
@@ -17,12 +17,12 @@ const Login = () => {
 		setLoginData(newLoginData);
 	};
 	const handleSubmit = (e) => {
-		loginUser(loginData.email, loginData.password, location, history);
+		loginUser(loginData.email, loginData.password, location, navigate);
 		e.preventDefault();
 
 	};
 	const handleGoogleSignIn = () => {
-		googleSignIn(location, history);
+		googleSignIn(location, navigate);
 	}
 	return (
 		<>
